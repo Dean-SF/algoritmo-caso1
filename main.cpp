@@ -1,7 +1,9 @@
 #include <iostream>
-#include "src/comparethetriplets.cpp"
-
 using namespace std;
+
+int *inefficientTriplets() {
+    
+}
 
 int main(){
     cout << "hola" << endl;
