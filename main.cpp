@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string.h>
 
-#define ARRAY_START 0
+#define INICIO_ARRAY 0
 
 using namespace std;
 
@@ -15,7 +15,7 @@ de la variable "i", con el resto del cuerpo, en el peor de los caso se hacen 6 c
 y 3 incrementos al score. En total hay 10 comparaciones y 6 incrementos o operaciones aritmeticas
 */
 void inefficientTriplets(int *alice, int *bob, int *score) {
-    for(int i = ARRAY_START; i < 3; i++) {
+    for(int i = INICIO_ARRAY; i < 3; i++) {
         if(alice[i] > bob[i]) {
             score[0]++;
         } else if(alice[i] < bob[i]) {
@@ -115,7 +115,7 @@ int inefficientDivision(int arraySize, int *array, int day, int month) {
     int numberOfDivisions = 0;
     int sum;
     arraySize = arraySize - (month - 1);
-    for(int i = ARRAY_START; i < arraySize; i++) {
+    for(int i = INICIO_ARRAY; i < arraySize; i++) {
         sum = 0;
         for(int j = 0; j < month; j++) {
             sum += array[i+j];
@@ -139,7 +139,7 @@ int efficientDivision(int arraySize, int *array, int day, int month) {
     int numberOfDivisions = 0;
     int sum = 0;
     month--;
-    for(int i = ARRAY_START; i < arraySize; i++) {
+    for(int i = INICIO_ARRAY; i < arraySize; i++) {
         sum += array[i];
         if(i < month) {
             continue;
@@ -151,6 +151,39 @@ int efficientDivision(int arraySize, int *array, int day, int month) {
     }
     return numberOfDivisions;
 }
+
+// EJERCICIO THE MINION GAME
+
+string minionGame(string palabra) {
+    int kevin = 0;
+    int stuart = 0;
+    int substrings = palabra.size();
+
+    /*
+    En este ciclo se recorre la palabra completa buscando por las vocales, si es una vocal, el numero
+    de letras restante se le suma al puntaje de kevin puesto a que la cantidad de letras restantes es
+    la cantidad de substrings que se puede hacer, Si no es una vocal se asume que es consonante y se
+    le suma la cantidad de letras restante a stuart
+    */
+    for(int i = INICIO_ARRAY; i < palabra.size(); i++) {
+        if(palabra[i] == 'A' || palabra[i] == 'E' || palabra[i] == 'I' || palabra[i] == 'O' || palabra[i] == 'U') {
+            kevin += substrings;
+        } else {
+            stuart += substrings;
+        }
+        substrings--;
+    }
+
+    // Se verifica quien gano para retornar el string correspondiente
+    if(kevin > stuart) {
+        return "Kevin " + to_string(kevin);
+    } else if(stuart > kevin) {
+        return "Stuart " + to_string(stuart);
+    }
+    return "Empate";
+}
+
+
 
 int main(){
     cout << "--------- " << "EJERCICIO 1: COMPARE THE TRIPLETS" << " ---------" << endl;
@@ -190,6 +223,11 @@ int main(){
 
     int chocolate2[] = {3, 7, 8, 2, 10, 0};
     cout << "Lily puede dividir el chocolate en: " << efficientDivision(6,chocolate2,10,2) << endl;
+
+    cout << "\n--------- " << "EJERCICIO 4: THE MINION GAME" << " ---------" << endl;
+    cout << "Primera prueba: Stuart vs. Kevin con la palabra 'BANANA': " << minionGame("BANANA") << endl;
+    cout << "\nSegunda prueba: Stuart vs. Kevin con la palabra 'ARIAL': " << minionGame("ARIAL") << endl;
+    cout << "\nTercera prueba: Stuart vs. Kevin con la palabra 'POO': " << minionGame("POO") << endl;
 
     return 0;
 }
