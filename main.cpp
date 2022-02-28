@@ -186,29 +186,42 @@ string minionGame(string palabra) {
 // EJERCICIO CIPHER
 
 string chiper(int n,int k,string s) {
-    char *result = new char[n];
-    result[0] = s[0]-48;
+    char *desencriptado = new char[n];
+    desencriptado[0] = s[0]-48;
     for (int i = 1; i < k; i++) {
-        result[i] = s[i-1] ^ s[i];
+        desencriptado[i] = s[i-1] ^ s[i];
     }
     char aux;
     for (int i = k; i < n; i++) {
         aux = '0';
         for (int j = i-(k-1); j < i; j++) {
-            aux = aux ^ result[j];
+            aux = aux ^ desencriptado[j];
         }
-        result[i] = aux ^ s[i];
+        desencriptado[i] = aux ^ s[i];
     }
     string retorno = "";
     for (int i = 0; i < n; i++) {
-        retorno += result[i]+48;
+        retorno += desencriptado[i]+48;
     }
     return retorno;
 }
 
 // EJERCICIO PAIRS
 
+int pairs(int array[], int size, int keyValue) {
+    int numberOfPairs = 0;
+    for(int i = INICIO_ARRAY; i < size; i++) {
+        for(int j = INICIO_ARRAY; j < size; j++) {
+            if(j==i)
+                break;
+            if(abs(array[i]-array[j]) == keyValue) {
+                numberOfPairs++;
+            }
+        }
+    }
+    return numberOfPairs;
 
+}
 
 int main(){
     cout << "--------- " << "EJERCICIO 1: COMPARE THE TRIPLETS" << " ---------" << endl;
@@ -217,7 +230,7 @@ int main(){
     int bob[] = {99,16,8};
     int score[] = {0,0};
     efficientTriplets(alice,bob,score);
-    cout << "Para un resultado de: Alicie con un score de: " << score[0];
+    cout << "Para un desencriptadoado de: Alicie con un score de: " << score[0];
     cout << " | Bob con un score de: " << score[1] << endl;
 
     cout << "\nSegunda prueba: Alicie tiene un puntaje de 50, 60 y 70 | Bob tiene un puntaje de 30, 60 y 100" << endl;
@@ -225,7 +238,7 @@ int main(){
     int bob2[] = {30,60,100};
     int score2[] = {0,0};
     efficientTriplets(alice2,bob2,score2);
-    cout << "Para un resultado de: Alicie con un score de: " << score2[0];
+    cout << "Para un desencriptadoado de: Alicie con un score de: " << score2[0];
     cout << " | Bob con un score de: " << score2[1] << endl;
 
     cout << "\n--------- " << "EJERCICIO 2: TIME CONVERSION" << " ---------" << endl;
@@ -258,5 +271,12 @@ int main(){
     cout << "Primera prueba: n = 7, k = 4, s = \"1110100110\" : " << chiper(7,4,"1110100110") << endl;
     cout << "\nSegunda prueba: n = 6, k = 2, s = \"1110001\" : " << chiper(6,2,"1110001") << endl;
     
+    cout << "\n--------- " << "EJERCICIO 6: PAIRS" << " ---------" << endl;
+    int arr[] = {1,5,3,4,2};
+    cout << "Primera prueba: Arreglo = [1,5,3,4,2], k = 2: " << pairs(arr,5,2) << endl;
+    int arr2[] = {10,6,5,7,2};
+    cout << "\nSegunda prueba: Arreglo = [10,8,5,7,2], k = 3: " << pairs(arr2,5,3) << endl;
+
+
     return 0;
 }
