@@ -183,6 +183,31 @@ string minionGame(string palabra) {
     return "Empate";
 }
 
+// EJERCICIO CIPHER
+
+string chiper(int n,int k,string s) {
+    char *result = new char[n];
+    result[0] = s[0]-48;
+    for (int i = 1; i < k; i++) {
+        result[i] = s[i-1] ^ s[i];
+    }
+    char aux;
+    for (int i = k; i < n; i++) {
+        aux = '0';
+        for (int j = i-(k-1); j < i; j++) {
+            aux = aux ^ result[j];
+        }
+        result[i] = aux ^ s[i];
+    }
+    string retorno = "";
+    for (int i = 0; i < n; i++) {
+        retorno += result[i]+48;
+    }
+    return retorno;
+}
+
+// EJERCICIO PAIRS
+
 
 
 int main(){
@@ -229,5 +254,9 @@ int main(){
     cout << "\nSegunda prueba: Stuart vs. Kevin con la palabra 'ARIAL': " << minionGame("ARIAL") << endl;
     cout << "\nTercera prueba: Stuart vs. Kevin con la palabra 'POO': " << minionGame("POO") << endl;
 
+    cout << "\n--------- " << "EJERCICIO 5: CIPHER" << " ---------" << endl;
+    cout << "Primera prueba: n = 7, k = 4, s = \"1110100110\" : " << chiper(7,4,"1110100110") << endl;
+    cout << "\nSegunda prueba: n = 6, k = 2, s = \"1110001\" : " << chiper(6,2,"1110001") << endl;
+    
     return 0;
 }
