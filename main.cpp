@@ -30,8 +30,8 @@ para un total de 3 comparaciones y 11 operaciones aritmetiicas en el peor de los
 disminucion de comparaciones y aumentando las operaciones aritmeticas.
 */
 void efficientTriplets(int *alice, int *bob, int *score) {
-    int puntaje;
-    if(alice[0]!=bob[0]) {
+    int puntaje;                
+    if(alice[0]!=bob[0]) {         
         puntaje = (alice[0]-bob[0])/abs((alice[0]-bob[0]));
         score[0] += (puntaje+1);
         score[1] += (puntaje-1);
@@ -111,20 +111,21 @@ debido a que las operaciones aritmeticas se repiten ya que el arreglo va avanzan
 y cada numero anterior ya se sumo con los tres siguientes numeros y esta suma se reinicia cada
 que se pasa de numero en el arreglo.
 */
-int inefficientDivision(int arraySize, int *array, int day, int month) {
-    int numberOfDivisions = 0;
+int inefficientDivision(int arraySize, int *array, int day, int month) { 
+    int numberOfDivisions = 0;                                           
     int sum;
-    arraySize = arraySize - (month - 1);
-    for(int i = INICIO_ARRAY; i < arraySize; i++) {
-        sum = 0;
-        for(int j = 0; j < month; j++) {
-            sum += array[i+j];
+    arraySize = arraySize - (month - 1);                         
+    for(int i = INICIO_ARRAY; i < arraySize; i++) { 
+                                            
+        sum = 0;                                    
+        for(int j = 0; j < month; j++) { 
+            sum += array[i+j];              
         }
-        if(sum == day) {
-            numberOfDivisions++;
+        if(sum == day) {                 
+            numberOfDivisions++;         
         }
     }
-    return numberOfDivisions;
+    return numberOfDivisions;           
 }
 
 /*
@@ -136,21 +137,22 @@ en el arreglo, se volvian a sumar numeros desde 0, para este caso que son 3 mese
 */
 
 int efficientDivision(int arraySize, int *array, int day, int month) {
-    int numberOfDivisions = 0;
-    int sum = 0;
-    month--;
-    for(int i = INICIO_ARRAY; i < arraySize; i++) {
-        sum += array[i];
-        if(i < month) {
-            continue;
+    int numberOfDivisions = 0; // 1 asignacion = 1 tiempo -> 1 + 
+    int sum = 0; // 1 asignacion = 1 tiempo -> 1 + 
+    month--; // 1 asignacion y 1 resta = 2 tiempo -> 2 + 
+    for(int i = INICIO_ARRAY; i < arraySize; i++) { // 1 asignacion externa y (1 comparacion, 1 suma y 1 asignacion interna) -> 1 + [(3 + 
+        sum += array[i]; // 1 suma, 1 asignacion, 1 acceso indexado = 3 tiempos -> 3 +
+        if(i < month) { // 1 comparacion = 1 tiempo -> 1 +
+            continue;   // 1 salto = 1 tiempo -> 1 + (no cuenta)
         }
-        if(sum == day) {
-            numberOfDivisions++;
+        if(sum == day) {    // 1 comparacion = 1 tiempo -> 1 +
+            numberOfDivisions++;    // 1 suma y 1 asignacion = 2 tiempos -> 2 +
         }
-        sum -= array[i-month];
+        sum -= array[i-month]; // 1 resta, 1 asignacion, 1 acceso indexado, 1 resta en la indexacion = 4 tiempos -> 4) * n ] +
     }
-    return numberOfDivisions;
+    return numberOfDivisions; // 1 retorno = 1 tiempo -> 1
 }
+                            // f(n) = 5 + (14*n) + 1 = 14n + 6 -> O(n)
 
 // EJERCICIO THE MINION GAME
 
@@ -208,19 +210,22 @@ string chiper(int n,int k,string s) {
 
 // EJERCICIO PAIRS
 
-int pairs(int array[], int size, int keyValue) {
-    int numberOfPairs = 0;
-    for(int i = INICIO_ARRAY; i < size; i++) {
-        for(int j = INICIO_ARRAY; j < size; j++) {
-            if(j==i)
-                break;
-            if(abs(array[i]-array[j]) == keyValue) {
-                numberOfPairs++;
+int pairs(int array[], int size, int keyValue) { // n = size
+    int numberOfPairs = 0;  // 1 asignacion = 1 tiempo -> 1 + 
+    for(int i = INICIO_ARRAY; i < size; i++) { // 1 asignacion y (1 comparacion, 1 suma y 1 asignacion interna) -> 1 + (3 +
+        for(int j = INICIO_ARRAY; j < size; j++) { // 1 asignacion, 1 comparacion, en j++ 1 asignacion y 1 suma = 4 tiempos -> 4 +
+            if(j==i)    // 1 comparacion = 1 tiempo -> 1 +
+                break;  // 1 jump = 1 tiempo -> 1 + (no cuenta)
+            if(abs(array[i]-array[j]) == keyValue) { // 1 llamada de funcion, 1 parametro, 1 resta, 2 accesos indexados y 1 comparacion = 6 tiempos -> 6 +
+                numberOfPairs++; // 1 suma = 1 tiempo -> 1)*(n*n)
             }
         }
     }
-    return numberOfPairs;
-
+    return numberOfPairs; // 1 retorno (jump) = 1 tiempo -> + 1
+                        // f(n) = 2 + (3+4+1+6+1) * (n*n) + 1
+                        //      = 2 + 15*n^2 + 1
+                        //      = 15n^2 + 3
+                        //     -> O(n^2)
 }
 
 int main(){
