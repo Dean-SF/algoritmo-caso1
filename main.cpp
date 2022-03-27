@@ -136,14 +136,14 @@ suma y una resta cada vez que se avanza al siguiente elemento del arreglo, mient
 en el arreglo, se volvian a sumar numeros desde 0, para este caso que son 3 meses, se hacian 3 sumas denuevo
 */
 
-int efficientDivision(int arraySize, int *array, int day, int month) {
+int efficientDivision(int arraySize, int *array, int day, int month) { // n = arraySize
     int numberOfDivisions = 0; // 1 asignacion = 1 tiempo -> 1 + 
     int sum = 0; // 1 asignacion = 1 tiempo -> 1 + 
     month--; // 1 asignacion y 1 resta = 2 tiempo -> 2 + 
     for(int i = INICIO_ARRAY; i < arraySize; i++) { // 1 asignacion externa y (1 comparacion, 1 suma y 1 asignacion interna) -> 1 + [(3 + 
         sum += array[i]; // 1 suma, 1 asignacion, 1 acceso indexado = 3 tiempos -> 3 +
         if(i < month) { // 1 comparacion = 1 tiempo -> 1 +
-            continue;   // 1 salto = 1 tiempo -> 1 + (no cuenta)
+            continue;   // 1 salto = 1 tiempo -> 1 +
         }
         if(sum == day) {    // 1 comparacion = 1 tiempo -> 1 +
             numberOfDivisions++;    // 1 suma y 1 asignacion = 2 tiempos -> 2 +
@@ -152,7 +152,9 @@ int efficientDivision(int arraySize, int *array, int day, int month) {
     }
     return numberOfDivisions; // 1 retorno = 1 tiempo -> 1
 }
-                            // f(n) = 5 + (14*n) + 1 = 14n + 6 -> O(n)
+                            // f(n) = 5 + (15*n) + 1 
+                            //      = 15n + 6 
+                            //     -> O(n)
 
 // EJERCICIO THE MINION GAME
 
@@ -215,16 +217,16 @@ int pairs(int array[], int size, int keyValue) { // n = size
     for(int i = INICIO_ARRAY; i < size; i++) { // 1 asignacion y (1 comparacion, 1 suma y 1 asignacion interna) -> 1 + (3 +
         for(int j = INICIO_ARRAY; j < size; j++) { // 1 asignacion, 1 comparacion, en j++ 1 asignacion y 1 suma = 4 tiempos -> 4 +
             if(j==i)    // 1 comparacion = 1 tiempo -> 1 +
-                break;  // 1 jump = 1 tiempo -> 1 + (no cuenta)
+                break;  // 1 jump = 1 tiempo -> 1 +
             if(abs(array[i]-array[j]) == keyValue) { // 1 llamada de funcion, 1 parametro, 1 resta, 2 accesos indexados y 1 comparacion = 6 tiempos -> 6 +
                 numberOfPairs++; // 1 suma = 1 tiempo -> 1)*(n*n)
             }
         }
     }
     return numberOfPairs; // 1 retorno (jump) = 1 tiempo -> + 1
-                        // f(n) = 2 + (3+4+1+6+1) * (n*n) + 1
-                        //      = 2 + 15*n^2 + 1
-                        //      = 15n^2 + 3
+                        // f(n) = 2 + (3+4+1+1+6+1) * (n*n) + 1
+                        //      = 2 + 16*n^2 + 1
+                        //      = 16n^2 + 3
                         //     -> O(n^2)
 }
 
